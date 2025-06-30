@@ -11,16 +11,31 @@ int main()
 	int choice;
 	do
 	{
-		showMenu();
-		choice = getUserChoice();
+		mainMenu();
+		std::cin >> choice;
 
 		switch (choice)
 		{
 		case 1:
-			std::cout << "лввввв\n";
+			manageFilmsMenu();
+			break;
+		case 2:
+			manageHallMenu();
+			break;
+		case 3:
+			manageSessionMenu();
+			break;
+		case 4:
+			manageTicketsMenu();
+			break;
+		case 0:
+			std::cout << GREEN;
+			std::cout << "Вихід з програми... До зустрічі 👋\n";
+			std::cout << "Гарного дня!\n";
+			std::cout << RESET;
 			break;
 		default:
-			std::cout << RED << "Помилка! Ви вибрали не вірну опцію повторіть знову\n" << RESET;
+			std::cout << RED << "Невірний вибір. Спробуйте ще раз.\n";
 			break;
 		}
 	} while (choice != 0);
