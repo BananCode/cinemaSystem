@@ -4,13 +4,11 @@
 
 void loadDemoData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector<Session>& sessions, std::vector<Ticket>& tickets)
 {
-
-
 	films.push_back({1, "Матриця", "HORROR"});
 	films.push_back({1, "Початок", "COMEDY"});
 
-	halls.push_back({ 1, "Матриця",  50 });
-	halls.push_back({ 2, "Початок", 100 });
+	halls.push_back({ 1, "Зал: 1",  50 });
+	halls.push_back({ 2, "Зал: 2", 100 });
 
 	Film* movie1 = &films[0];
 	Film* movie2 = &films[1];
@@ -21,7 +19,8 @@ void loadDemoData(std::vector<Film>& films, std::vector<Hall>& halls, std::vecto
 	sessions.push_back({ 2, movie2, hall2, "2025-07-17 20:00" });
 
 	Session* session1 = &sessions[0];
+	Session* session2 = &sessions[1];
 
 	tickets.push_back({ 1, session1, 10 });
-
+	tickets.push_back({ 2, session2, 50 });
 }
