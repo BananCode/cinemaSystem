@@ -14,9 +14,4 @@
 #define BOLD      "\033[1m"
 #define UNDERLINE "\033[4m"
 
-#define INFO(msg)    std::cout << CYAN << "[INFO] " << RESET << msg << std::endl
-#define SUCCESS(msg) std::cout << GREEN << "[SUCCESS] " << RESET << msg << std::endl
-#define ERROR(msg)   std::cout << RED << "[ERROR] " << RESET << msg << std::endl
-#define WARN(msg)    std::cout << YELLOW << "[WARNING] " << RESET << msg << std::endl
-
 #endif
