@@ -6,9 +6,9 @@ void showAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
 {
     std::cout << BOLD << YELLOW;
     std::cout << std::left;
-    std::cout << std::setw(20) << "Фільм" << " | "
+    std::cout << std::setw(18) << "Фільм" << " | "
         << std::setw(10) << "Зал" << " | "
-        << std::setw(15) << "Час сесії" << " | "
+        << std::setw(24) << "Час сесії" << " | "
         << std::setw(10) << "Місце" << "\n";
     std::cout << RESET;
 
@@ -29,5 +29,4 @@ void showAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
             << GREEN << std::setw(15) << s->sessionTime << RESET << " | "
             << CYAN << std::setw(10) << t.seatNum << RESET << "\n";
     }
-
 }
