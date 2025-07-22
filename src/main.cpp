@@ -10,16 +10,12 @@
 
 int main()
 {
-	std::vector<Film> films;
-	std::vector<Hall> halls;
-	std::vector<Session> sessions;
-	std::vector<Ticket> tickets;
 	int choice;
 	
 	do
 	{
 		mainMenu();
-		while (!(std::cin >> choice)) {						    // Перевіряємо, чи введено число
+		while (!(std::cin >> choice)) {				     		    // Перевіряємо, чи введено число
 			std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
 			std::cin.clear();                                                   // Очищаємо стан помилки
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищаємо буфер
@@ -28,16 +24,16 @@ int main()
 		switch (choice)
 		{
 		case 1:
-			manageFilmsMenu();
+			manageFilmsMenu(films);
 			break;
 		case 2:
-			manageHallMenu();
+			manageHallMenu(halls);
 			break;
 		case 3:
-			manageSessionMenu();
+			manageSessionMenu(sessions);
 			break;
 		case 4:
-			manageTicketsMenu();
+			manageTicketsMenu(tickets, sessions);
 			break;
 		case 5:
 			break;
@@ -49,15 +45,11 @@ int main()
                 std::cout << CYAN << "\nДемо-дані завантажено." << RESET << std::endl;
 			break;
 		case 0:
-			std::cout << YELLOW;
-			std::cout << "\nВихід з програми... До зустрічі 👋\n";
-			std::cout << "Гарного дня!\n";
-			std::cout << RESET;
+			std::cout << YELLOW << "\nВихід з програми... До зустрічі 👋\n";
+			std::cout << "Гарного дня!\n" << RESET;
 			break;
 		default:
-			std::cout << RED;
-			std::cout << "Невірний вибір. Спробуйте ще раз.\n";
-			std::cout << RESET;
+			std::cout << RED << "Невірний вибір. Спробуйте ще раз.\n" << RESET;
 			break;
 		}
 	} while (choice != 0);
