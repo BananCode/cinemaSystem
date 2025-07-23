@@ -82,3 +82,17 @@ void addSession(std::vector<Session>& sessions)
     sessions.push_back(newSession);
     std::cout << GREEN << "Сеанс додано!" << RESET << std::endl;
 }
+
+void showSession(std::vector<Session>& sessions)
+{
+    if (sessions.size() == 0)
+        std::cout << RED << "\nСеансів ще немає\n" << RESET;
+    else
+        for (int i = 0; i < sessions.size(); i++)
+        {
+            std::cout << "\nСеанс " << i + 1 << ": ";
+            std::cout << "\nНазва фільму: " << sessions[i].movie->filmName;
+            std::cout << "\nНазва залу: " << sessions[i].hall->hallName;
+            std::cout << "\nЧас проведення сеансу: " << sessions[i].sessionTime << "\n";
+        }
+}
