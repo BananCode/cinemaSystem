@@ -20,5 +20,6 @@ struct Session
 extern std::vector<Session> sessions;
 
 void addSession(std::vector<Session>& sessions);
+void showSession(std::vector<Session>& sessions);
 
 #endif
