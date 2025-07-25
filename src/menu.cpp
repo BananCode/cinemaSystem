@@ -49,13 +49,13 @@ void manageFilmsMenu(std::vector<Film>& films)
             showFilms(films);
             break;
         case 3: 
-            std::cout << "Редагуємо за айді\n";
+            editFilmById(films);
             break;
         case 4: 
             std::cout << "Видаляємо за айді\n";
             break;
         case 0:
-            std::cout << "Повернення до головного меню...\n";
+            std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
             break;
         default:
             std::cout << RED << "Невірний вибір. Спробуйте ще раз.\n" << RESET;
@@ -70,12 +70,12 @@ void manageHallMenu(std::vector<Hall>& halls)
     do 
     {
         std::cout << BOLD << YELLOW << "\n== Керування залами ==\n" << RESET;
-        std::cout << "1. Додати зал\n";
+        std::cout << GREEN << "1. Додати зал\n";
         std::cout << "2. Переглянути всі зали\n";
         std::cout << "3. Редагувати залу за ID\n";
         std::cout << "4. Видалити залу за ID\n";
-        std::cout << "0. Назад\n";
-        std::cout << "Ваш вибір: ";
+        std::cout << "0. Назад\n" << RESET;
+        std::cout << YELLOW << "Ваш вибір: " << RESET;
         
         while (!(std::cin >> choice)) {                                         // Перевіряємо, чи введено число
             std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
@@ -98,12 +98,10 @@ void manageHallMenu(std::vector<Hall>& halls)
             std::cout << "Видаляємо за айді\n";
             break;
         case 0:
-            std::cout << "Повернення до головного меню...\n";
+            std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
             break;
         default:
-            std::cout << RED;
-            std::cout << "Невірний вибір. Спробуйте ще раз.\n";
-            std::cout << RESET;
+            std::cout << RED << "Невірний вибір. Спробуйте ще раз.\n" << RESET;
             break;
         }
     } while (choice != 0);
@@ -114,15 +112,13 @@ void manageSessionMenu(std::vector<Session>& sessions)
     int choice;
     do 
     {
-        std::cout << BOLD << YELLOW;
-        std::cout << "\n== Керування сеансами ==\n";
-        std::cout << RESET;
-        std::cout << "1. Додати сенс\n";
+        std::cout << BOLD << YELLOW << "\n== Керування сеансами ==\n" << RESET;
+        std::cout << GREEN << "1. Додати сенс\n";
         std::cout << "2. Переглянути всі сеанси\n";
         std::cout << "3. Редагувати сеанси за ID\n";
         std::cout << "4. Видалити сеанси за ID\n";
-        std::cout << "0. Назад\n";
-        std::cout << "Ваш вибір: ";
+        std::cout << "0. Назад\n" << RESET;
+        std::cout << YELLOW << "Ваш вибір: " << RESET;
         while (!(std::cin >> choice)) {                                         // Перевіряємо, чи введено число
             std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
             std::cin.clear();                                                   // Очищаємо стан помилки
@@ -144,7 +140,7 @@ void manageSessionMenu(std::vector<Session>& sessions)
             std::cout << "Видаляємо за айді\n";
             break;
         case 0:
-            std::cout << "Повернення до головного меню...\n";
+            std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
             break;
         default:
             std::cout << RED << "Невірний вибір. Спробуйте ще раз.\n" << RESET;
@@ -152,18 +148,19 @@ void manageSessionMenu(std::vector<Session>& sessions)
         }
     } while (choice != 0);
 }
+
 void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessions) {
     int choice;
     Session* selectedSession = nullptr; 
  
     do {
         std::cout << BOLD << YELLOW << "\n== Керування квитками ==\n" << RESET;
-        std::cout << "1. Додати квиток\n";
+        std::cout << GREEN << "1. Додати квиток\n";
         std::cout << "2. Переглянути всі квитки\n";
         std::cout << "3. Редагувати квиток за ID\n";
         std::cout << "4. Видалити квиток за ID\n";
-        std::cout << "0. Назад\n";
-        std::cout << "Ваш вибір: ";
+        std::cout << "0. Назад\n" << RESET;
+        std::cout << YELLOW << "Ваш вибір: " << RESET;
         
         while (!(std::cin >> choice)) {
             std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
@@ -174,9 +171,10 @@ void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessi
         switch (choice) {
         case 1: {
             int ticketId, seatNum;
-            std::cout << "Введіть ID квитка: ";
+            std::cout << YELLOW << "\nДодайте квиток:\n" << RESET;
+            std::cout << CYAN << "Введіть ID квитка: " << RESET;
             std::cin >> ticketId;
-            std::cout << "Введіть номер місця: ";
+            std::cout << CYAN << "Введіть номер місця: " << RESET;
             std::cin >> seatNum;
 
             if (sessions.empty()) {
@@ -184,7 +182,7 @@ void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessi
                 break;
             }
 
-            std::cout << "Введіть ID сеансу: ";
+            std::cout << CYAN << "Введіть ID сеансу: " << RESET;
             int sessionId;
             std::cin >> sessionId;
 
@@ -214,7 +212,7 @@ void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessi
             std::cout << "Функція видалення квитка (поки не реалізована)\n";
             break;
         case 0:
-            std::cout << "Повернення до головного меню...\n";
+            std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
             break;
         default:
             std::cout << RED << "Невірний вибір. Спробуйте ще раз.\n" << RESET;
