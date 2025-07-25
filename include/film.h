@@ -15,7 +15,7 @@ extern std::vector<Film> films;
 
 void addFilm(std::vector<Film>& films);                     // Додати новий фільм до вектора
 void showFilms(std::vector<Film>& films);                   // Вивести всі фільми у списку
-void editFilmById(std::vector<Film>& films, int filmId);    // Редагувати фільм за його ID
+void editFilmById(std::vector<Film>& films);                // Редагувати фільм за його ID
 void removeFilmById(std::vector<Film>& films, int filmId);  // Видалити фільм зі списку за його ID
 
 #endif
