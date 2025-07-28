@@ -52,7 +52,7 @@ void manageFilmsMenu(std::vector<Film>& films)
             editFilmById(films);
             break;
         case 4: 
-            std::cout << "Видаляємо за айді\n";
+            removeFilmById(films);
             break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
@@ -72,8 +72,8 @@ void manageHallMenu(std::vector<Hall>& halls)
         std::cout << BOLD << YELLOW << "\n== Керування залами ==\n" << RESET;
         std::cout << GREEN << "1. Додати зал\n";
         std::cout << "2. Переглянути всі зали\n";
-        std::cout << "3. Редагувати залу за ID\n";
-        std::cout << "4. Видалити залу за ID\n";
+        std::cout << "3. Редагувати зали за ID\n";
+        std::cout << "4. Видалити зал за ID\n";
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
         
@@ -89,13 +89,13 @@ void manageHallMenu(std::vector<Hall>& halls)
             addHall(halls);
             break;
         case 2:
-            showHall(halls);
+            showHalls(halls);
             break;
         case 3:
-            std::cout << "Редагуємо за айді\n";
+            editHallById(halls);
             break;
         case 4: 
-            std::cout << "Видаляємо за айді\n";
+            removeHallById(halls);
             break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
@@ -134,10 +134,10 @@ void manageSessionMenu(std::vector<Session>& sessions)
             showSession(sessions);
             break;
         case 3:
-            std::cout << "Редагуємо за айді\n";
+            editSessionById(sessions);
             break;
         case 4: 
-            std::cout << "Видаляємо за айді\n";
+            removeSessionById(sessions);
             break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
@@ -203,13 +203,13 @@ void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessi
             break;
         }
         case 2:
-            showTickets(tickets);
+            showTicket(tickets);
             break;
         case 3:
-            std::cout << "Функція редагування квитка (поки не реалізована)\n";
+            editTicketById(tickets);
             break;
         case 4:
-            std::cout << "Функція видалення квитка (поки не реалізована)\n";
+            removeTicketById(tickets);
             break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
