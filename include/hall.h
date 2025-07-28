@@ -8,12 +8,14 @@ struct Hall
 {
 	int hallId;              // ID залу
 	std::string hallName;    // назва залу
-	int seatCount;	         // кількість місць
+	int seatCount;			 // кількість місць
 };
 
 extern std::vector<Hall> halls;
 
 void addHall(std::vector<Hall>& halls); 
 void showHall(std::vector<Hall>& halls);
+void editHallById(std::vector<Hall>& halls, int hallId);    
+void removeHallById(std::vector<Hall>& halls, int hallId);  
 
 #endif

@@ -6,17 +6,16 @@
 
 struct Film
 {
-    int id;               
-    std::string name;     
-    std::string genre;    
+    int filmId;               // Унікальний ідентифікатор фільму
+    std::string filmName;     // Назва фільму
+    std::string genre;        // Жанр фільму
 };
 
 extern std::vector<Film> films;
 
-void addFilm(std::vector<Film>& films);                 
-void showFilms(std::vector<Film>& films);               
-void findFilm(std::vector<Film>& films);                
-void editFilmById(std::vector<Film>& films, int id);    
-void removeFilmById(std::vector<Film>& films, int id);  
+void addFilm(std::vector<Film>& films);                     // Додати новий фільм до вектора
+void showFilms(std::vector<Film>& films);                   // Вивести всі фільми у списку
+void editFilmById(std::vector<Film>& films);                // Редагувати фільм за його ID
+void removeFilmById(std::vector<Film>& films, int filmId);  // Видалити фільм зі списку за його ID
 
 #endif
