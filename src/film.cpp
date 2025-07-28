@@ -82,3 +82,31 @@ void editFilmById(std::vector<Film>& films)
         }
     }
 }
+
+void removeFilmById(std::vector<Film>& films)
+{
+    int filmId;
+    if (films.size() == 0)
+        std::cout << RED << "\nФільмів ще не має\n" << RESET;
+    else
+    {
+        showFilms(films);
+
+        std::cout << YELLOW << "\nВведіть айді фільма який хочете вмдалити: " << RESET;
+        while (!(std::cin >> filmId))
+        {
+            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+
+        for (int i = 0; i < films.size(); i++)
+        {
+            if (filmId == films[i].filmId)
+            {
+                films.erase(films.begin() + i);
+                break;
+            }
+        }
+    }
+}
