@@ -15,7 +15,8 @@ int main()
 	do
 	{
 		mainMenu();
-		while (!(std::cin >> mainMenuChoice)) {											// Перевіряємо, чи введено число
+		while (!(std::cin >> mainMenuChoice)) 
+		{																		// Перевіряємо, чи введено число
 			std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
 			std::cin.clear();                                                   // Очищаємо стан помилки
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищаємо буфер
@@ -42,7 +43,11 @@ int main()
 			break;
 		case 7:
 			loadDemoData(films, halls, sessions, tickets);
-                std::cout << CYAN << "\nДемо-дані завантажено." << RESET << std::endl;
+                std::cout << CYAN << "\nДемо-дані завантажено.\n" << RESET;
+			break;
+		case 8:
+			saveAllData(films, halls, sessions, tickets);
+			std::cout << CYAN << "\nДані успішно збережено!\n" << RESET;
 			break;
 		case 0:
 			std::cout << YELLOW << "\nВихід з програми... До зустрічі 👋\n";
