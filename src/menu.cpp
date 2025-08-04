@@ -17,6 +17,7 @@ void mainMenu()
     std::cout << "5. Пошук і сортування\n";
     std::cout << "6. Огляд данних\n";
     std::cout << "7. Завантажити демо-дані\n";
+    std::cout << "8. Зберегти дані\n";
     std::cout << "0. Вихід\n" << RESET;
     std::cout << YELLOW  << "Ваш вибір: " << RESET;
 }
@@ -34,7 +35,8 @@ void manageFilmsMenu(std::vector<Film>& films)
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
        
-        while (!(std::cin >> choice)) {                                         // Перевіряємо, чи введено число
+        while (!(std::cin >> choice)) 
+        {                                                                       // Перевіряємо, чи введено число
             std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
             std::cin.clear();                                                   // Очищаємо стан помилки
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищаємо буфер
@@ -77,7 +79,8 @@ void manageHallMenu(std::vector<Hall>& halls)
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
         
-        while (!(std::cin >> choice)) {                                         // Перевіряємо, чи введено число
+        while (!(std::cin >> choice)) 
+        {                                                                        // Перевіряємо, чи введено число
             std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
             std::cin.clear();                                                   // Очищаємо стан помилки
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищаємо буфер
@@ -119,7 +122,9 @@ void manageSessionMenu(std::vector<Session>& sessions)
         std::cout << "4. Видалити сеанси за ID\n";
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
-        while (!(std::cin >> choice)) {                                         // Перевіряємо, чи введено число
+       
+        while (!(std::cin >> choice)) 
+        {                                                                       // Перевіряємо, чи введено число
             std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
             std::cin.clear();                                                   // Очищаємо стан помилки
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищаємо буфер
@@ -149,10 +154,9 @@ void manageSessionMenu(std::vector<Session>& sessions)
     } while (choice != 0);
 }
 
-void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessions) {
+void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessions) 
+{
     int choice;
-    Session* selectedSession = nullptr; 
- 
     do {
         std::cout << BOLD << YELLOW << "\n== Керування квитками ==\n" << RESET;
         std::cout << GREEN << "1. Додати квиток\n";
@@ -162,46 +166,18 @@ void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessi
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
         
-        while (!(std::cin >> choice)) {
+        while (!(std::cin >> choice)) 
+        {
             std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
 
-        switch (choice) {
-        case 1: {
-            int ticketId, seatNum;
-            std::cout << YELLOW << "\nДодайте квиток:\n" << RESET;
-            std::cout << CYAN << "Введіть ID квитка: " << RESET;
-            std::cin >> ticketId;
-            std::cout << CYAN << "Введіть номер місця: " << RESET;
-            std::cin >> seatNum;
-
-            if (sessions.empty()) {
-                std::cout << RED << "Немає сеансів!" << RESET << std::endl;
-                break;
-            }
-
-            std::cout << CYAN << "Введіть ID сеансу: " << RESET;
-            int sessionId;
-            std::cin >> sessionId;
-
-            selectedSession = nullptr;
-            for (auto& session : sessions) {
-                if (session.sessionId == sessionId) {
-                    selectedSession = &session;
-                    break;
-                }
-            }
-
-            if (!selectedSession) {
-                std::cout << RED << "Сеанс не знайдено!" << RESET << std::endl;
-                break;
-            }
-
-            addTicket(tickets, ticketId, selectedSession, seatNum);
+        switch (choice) 
+        {
+        case 1: 
+            addTicket(tickets, sessions);
             break;
-        }
         case 2:
             showTicket(tickets);
             break;
