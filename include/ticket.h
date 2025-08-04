@@ -15,7 +15,9 @@ struct Ticket
 
 extern std::vector<Ticket> tickets;
 
-void addTicket(std::vector<Ticket>& tickets, int ticketId, Session* session, int seatNum);
-void showTickets(std::vector<Ticket>& tickets);
+void addTicket(std::vector<Ticket>& tickets, std::vector<Session>& sessions);
+void showTicket(std::vector<Ticket>& tickets);
+void editTicketById(std::vector<Ticket>& tickets);
+void removeTicketById(std::vector<Ticket>& tickets);
 
 #endif
