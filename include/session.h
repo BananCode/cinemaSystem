@@ -21,5 +21,7 @@ extern std::vector<Session> sessions;
 
 void addSession(std::vector<Session>& sessions);
 void showSession(std::vector<Session>& sessions);
+void editSessionById(std::vector<Session>& sessions);
+void removeSessionById(std::vector<Session>& sessions);
 
 #endif
