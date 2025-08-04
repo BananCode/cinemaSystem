@@ -1,6 +1,7 @@
 #include "dataView.h"
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 
 void showAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector<Session>& sessions, std::vector<Ticket>& tickets)
 {
@@ -29,4 +30,37 @@ void showAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
             << GREEN << std::setw(15) << s->sessionTime << RESET << " | "
             << CYAN << std::setw(10) << t.seatNum << RESET << "\n";
     }
+}
+
+void saveAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector<Session>& sessions, std::vector<Ticket>& tickets)
+{
+    std::ofstream cinemaData("cinema_data.txt");
+
+    if (!cinemaData)
+    {
+        std::cout << RED << "Помилка: не вдалось відкрити файл\n" << RESET;
+        return;
+    }
+
+    cinemaData << "=== Фільми ===\n";
+    
+    for (const auto film : films)
+        cinemaData << film.filmId << ", " << film.filmName << ", " << film.genre << "\n";
+
+    cinemaData << "\n=== Зали ===\n";
+    
+    for (const auto hall : halls)
+        cinemaData << hall.hallId << ", " << hall.hallName << ", " << hall.seatCount << "\n";
+
+    cinemaData << "\n=== Сеанси ===\n";
+    
+    for (const auto session : sessions)
+        cinemaData << session.sessionId << ", " << session.movie->filmName << ", " << session.hall->hallName << ", " << session.sessionTime << "\n";
+
+    cinemaData << "\n=== Квитки ===\n";
+    
+    for (const auto ticket : tickets)
+        cinemaData << ticket.ticketId << ", " << ticket.session->sessionId << ", " << ticket.seatNum << "\n";
+
+    cinemaData.close();
 }
