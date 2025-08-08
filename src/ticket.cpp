@@ -1,5 +1,6 @@
 #include "ticket.h"
 #include <iostream>
+#include <iomanip>
 #include "colors.h"
 
 std::vector<Ticket> tickets;
@@ -113,20 +114,21 @@ void addTicket(std::vector<Ticket>& tickets, std::vector<Session>& sessions)
     std::cout << YELLOW << "Квиток успішно додано!\n" << RESET;
 }
 
-
 void showTicket(std::vector<Ticket>& tickets)
 {
-    if (tickets.size() == 0)
+    if (tickets.empty())
         std::cout << RED << "\nПомилка: квитків ще немає!\n" << RESET;
     else
-        for (int i = 0; i < tickets.size(); i++)
-        {
-            std::cout << GREEN << "\nКвиток " << i + 1 << ": " << RESET;
-            std::cout << YELLOW << "\nАйді квитка: " << RESET << tickets[i].ticketId;
-            std::cout << YELLOW << "\nНомер місця квитка: " << RESET << tickets[i].seatNum;
-            std::cout << YELLOW << "\nЗал: " << RESET << tickets[i].session->hall->hallName;
-            std::cout << YELLOW << "\nНазва фільму: " << RESET << tickets[i].session->movie->filmName << "\n";
-        }
+    {
+        std::cout << BOLD << YELLOW << "\n=== Список квитків ===\n" << RESET;
+        std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(15) << "Місце" << std::setw(30) << "Фільм" << std::setw(20) << "Зал" << RESET << "\n";
+        std::cout << std::string(65, '-') << "\n";
+        for (const auto& ticket : tickets)
+            std::cout << MAGENTA << std::setw(10) << ticket.ticketId << RESET 
+                      << CYAN << std::setw(15) << ticket.seatNum << RESET 
+                      << YELLOW << std::setw(30) << ticket.session->movie->filmName << RESET 
+                      << BLUE << std::setw(20) << ticket.session->hall->hallName << RESET << "\n";
+    }
 }
 
 void editTicketById(std::vector<Ticket>& tickets)
