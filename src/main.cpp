@@ -37,15 +37,13 @@ int main()
 			manageTicketsMenu(tickets, sessions);
 			break;
 		case 5:
-			break;
-		case 6:
 			showAllData(films, halls, sessions, tickets);
 			break;
-		case 7:
+		case 6:
 			loadDemoData(films, halls, sessions, tickets);
                 std::cout << CYAN << "\nДемо-дані завантажено.\n" << RESET;
 			break;
-		case 8:
+		case 7:
 			saveAllData(films, halls, sessions, tickets);
 			std::cout << CYAN << "\nДані успішно збережено!\n" << RESET;
 			break;
