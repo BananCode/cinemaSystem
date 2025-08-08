@@ -1,13 +1,26 @@
 #include "film.h"
 #include <iostream>
+#include <iomanip>
 #include "colors.h"
 
 std::vector<Film> films;
+
+const std::string genreNames[GenreCount] 
+{
+    "Comedy",
+    "Drama",
+    "Action",
+    "Horror",
+    "Fantasy",
+    "Thriller",
+    "Documentary"
+};
 
 void addFilm(std::vector<Film>& films)
 {
     Film newFilm;
     bool isUnique = false;
+    int genreChoice;
 
     std::cin.ignore();
     std::cout << BOLD << YELLOW << "\n=== Додавання нового фільму ===\n" << RESET;
@@ -21,24 +34,31 @@ void addFilm(std::vector<Film>& films)
             std::cout << RED << "Помилка: назва фільму не може бути порожньою!\n" << RESET;
             std::cout << CYAN << "Введіть назву фільму: " << RESET;
         }
-        else 
-            break;
-    }
-
-    std::cout << CYAN << "Введіть жанр фільму: " << RESET;
-    while (true)
-    {
-        std::getline(std::cin, newFilm.genre);
-
-        if (newFilm.genre.empty())
-        {
-            std::cout << RED << "Помилка: жанр фільму не може бути порожнім!\n" << RESET;
-            std::cout << CYAN << "Введіть жанр фільму: " << RESET;
-        }
         else
             break;
     }
-    
+
+    std::cout << CYAN << "Виберіть жанр фільму: \n" << RESET;
+    for (int i = 0; i < GenreCount; i++)
+        std::cout << YELLOW << i + 1 << " - " << genreNames[i] << RESET << "\n";
+
+    while (true)
+    {
+        std::cout << CYAN << "Введіть номер жанру (1-" << GenreCount << "): " << RESET;
+        std::cin >> genreChoice;
+        if (std::cin.fail() || genreChoice < 1 || genreChoice > GenreCount)
+        {
+            std::cout << RED << "Помилка! Введіть число від 1 до " << GenreCount << "\n" << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        else
+        {
+            newFilm.genre = static_cast<Genre>(genreChoice - 1);
+            break;
+        }
+    }
+
     std::cout << CYAN << "Введіть ID фільму: " << RESET;
     while (true)
     {
@@ -76,13 +96,15 @@ void showFilms(std::vector<Film>& films)
     if (films.empty())
         std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
     else
-        for (int i = 0; i < films.size(); i++)
-        {
-            std::cout << GREEN << "\nФільм " << i + 1 << ": " << RESET;
-            std::cout << YELLOW << "\nАйді фільму: " << RESET << films[i].filmId;
-            std::cout << YELLOW << "\nНазва фільму: " << RESET << films[i].filmName;
-            std::cout << YELLOW << "\nЖанр фільму: " << RESET << films[i].genre << "\n";
-        }
+    {
+        std::cout << BOLD << YELLOW << "\n=== Список фільмів ===\n" << RESET;
+        std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(20) << "Назва" << std::setw(15) << "Жанр" << RESET << "\n";
+        std::cout << std::string(35, '-') << "\n";
+        for (const auto film : films)
+            std::cout << MAGENTA << std::setw(10) << film.filmId << RESET 
+                      << CYAN << std::setw(20) << film.filmName << RESET
+                      << YELLOW << std::setw(15) << genreNames[film.genre] << RESET << "\n";
+    }
 }
 
 void editFilmById(std::vector<Film>& films)
@@ -134,18 +156,25 @@ void editFilmById(std::vector<Film>& films)
                         break;
                 }
 
-                std::cout << CYAN << "Введіть новий жанр фільму: " << RESET;
+                std::cout << CYAN << "Виберіть новий жанр фільму: \n" << RESET;
+                for (int i = 0; i < GenreCount; i++)
+                    std::cout << i + 1 << " - " << genreNames[i] << "\n";
+                int genreChoice;
                 while (true)
                 {
-                    std::getline(std::cin, films[i].genre);
-
-                    if (films[i].genre.empty())
+                    std::cout << CYAN << "Введіть номер жанру (1-" << GenreCount << "): " << RESET;
+                    std::cin >> genreChoice;
+                    if (std::cin.fail() || genreChoice < 1 || genreChoice > GenreCount)
                     {
-                        std::cout << RED << "Помилка: жанр фільму не може бути порожнім!\n" << RESET;
-                        std::cout << CYAN << "Введіть новий жанр фільму: " << RESET;
+                        std::cout << RED << "Помилка! Введіть число від 1 до " << GenreCount << "\n" << RESET;
+                        std::cin.clear();
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     }
                     else
+                    {
+                        films[i].genre = static_cast<Genre>(genreChoice - 1);
                         break;
+                    }
                 }
                 std::cout << MAGENTA << "\nФільм успішно відредаговано!\n" << RESET;
                 break;
