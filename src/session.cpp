@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "session.h"
 #include "film.h"
 #include "hall.h"
@@ -139,14 +140,16 @@ void showSession(std::vector<Session>& sessions)
     if (sessions.empty())
         std::cout << RED << "\nПомилка: сеансів ще немає!\n" << RESET;
     else
-        for (int i = 0; i < sessions.size(); i++)
-        {
-            std::cout << GREEN << "\nСеанс " << i + 1 << ": " << RESET;
-            std::cout << YELLOW << "\nАйді сеансу: " << RESET << sessions[i].sessionId;
-            std::cout << YELLOW << "\nНазва фільму: " << RESET << sessions[i].movie->filmName;
-            std::cout << YELLOW << "\nНазва залу: " << RESET << sessions[i].hall->hallName;
-            std::cout << YELLOW << "\nЧас проведення сеансу: " << RESET << sessions[i].sessionTime << "\n";
-        }
+    {
+        std::cout << BOLD << YELLOW << "\n=== Список сеансів ===\n" << RESET;
+        std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(20) << "Фільм" << std::setw(15) << "Зал" << std::setw(20) << "Час" << RESET << "\n";
+        std::cout << std::string(65, '-') << "\n";
+        for (const auto& session : sessions)
+            std::cout << MAGENTA << std::setw(10) << session.sessionId << RESET 
+                      << CYAN << std::setw(20) << session.movie->filmName << RESET 
+                      << YELLOW << std::setw(15) << session.hall->hallName << RESET 
+                      << BLUE << std::setw(20) << session.sessionTime << RESET << "\n";
+    }
 }
 
 void editSessionById(std::vector<Session>& sessions)
