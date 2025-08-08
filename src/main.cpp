@@ -47,6 +47,10 @@ int main()
 			saveAllData(films, halls, sessions, tickets);
 			std::cout << CYAN << "\nДані успішно збережено!\n" << RESET;
 			break;
+		case 8:
+			loadAllData(films, halls, sessions, tickets);
+			std::cout << CYAN << "\nДані успішно завантажено!\n" << RESET;
+			break;
 		case 0:
 			std::cout << YELLOW << "\nВихід з програми... До зустрічі 👋\n";
 			std::cout << "Гарного дня!\n" << RESET;
