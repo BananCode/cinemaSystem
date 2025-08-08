@@ -17,6 +17,7 @@ void mainMenu()
     std::cout << "5. Огляд данних\n";
     std::cout << "6. Завантажити демо-дані\n";
     std::cout << "7. Зберегти дані\n";
+    std::cout << "8. Завантажити дані\n";
     std::cout << "0. Вихід\n" << RESET;
     std::cout << YELLOW  << "Ваш вибір: " << RESET;
 }
