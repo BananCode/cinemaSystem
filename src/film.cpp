@@ -5,7 +5,7 @@
 
 std::vector<Film> films;
 
-const std::string genreNames[GenreCount] 
+const std::string genreNames[GenreCount] // Масив жанрів
 {
     "Comedy",
     "Drama",
@@ -111,6 +111,7 @@ void editFilmById(std::vector<Film>& films)
 {
     int filmId;
     bool found = false;
+    int genreChoice;
 
     if (films.empty())
         std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
@@ -158,8 +159,8 @@ void editFilmById(std::vector<Film>& films)
 
                 std::cout << CYAN << "Виберіть новий жанр фільму: \n" << RESET;
                 for (int i = 0; i < GenreCount; i++)
-                    std::cout << i + 1 << " - " << genreNames[i] << "\n";
-                int genreChoice;
+                    std::cout << YELLOW << i + 1 << " - " << genreNames[i] << RESET << "\n";
+
                 while (true)
                 {
                     std::cout << CYAN << "Введіть номер жанру (1-" << GenreCount << "): " << RESET;
@@ -223,4 +224,51 @@ void removeFilmById(std::vector<Film>& films)
         if (!found)
             std::cout << RED << "\nПомилка: фільм з таким ID не знайдено!\n" << RESET;
     }
+}
+
+void searchFilmsById(std::vector<Film>& films)
+{
+    int filmId;
+    bool found = false;
+
+    std::cout << BOLD << YELLOW << "\n=== Пошук фільмів за ID ===\n" << RESET;
+    std::cout << CYAN << "Введіть ID фільму: " << RESET;
+
+    while (true)
+    {
+        std::cin >> filmId;
+        if (std::cin.fail())
+        {
+            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        else if (filmId <= 0)
+            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+        else
+            break;
+    }
+
+    if (films.empty()) 
+    {
+        std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        return;
+    }
+
+    std::cout << BOLD << YELLOW << "\n=== Результати пошуку ===\n" << RESET;
+    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(30) << "Назва" << std::setw(15) << "Жанр" << RESET << "\n";
+    std::cout << std::string(55, '-') << "\n";
+
+    for (const auto film : films)
+        if (film.filmId == filmId)
+        {
+            std::cout << MAGENTA << std::setw(10) << film.filmId << RESET
+                << CYAN << std::setw(30) << film.filmName << RESET
+                << YELLOW << std::setw(15) << genreNames[film.genre] << RESET << "\n";
+            found = true;
+            break;
+        }
+    
+    if (!found) 
+        std::cout << RED << "Фільм з ID " << filmId << " не знайдено!\n" << RESET;
 }
