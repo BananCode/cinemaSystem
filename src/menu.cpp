@@ -14,7 +14,7 @@ void mainMenu()
     std::cout << "2. Керування залами\n";
     std::cout << "3. Керування сеансами\n";
     std::cout << "4. Керування квитками\n";
-    std::cout << "5. Огляд данних\n";
+    std::cout << "5. Огляд даних\n";
     std::cout << "6. Завантажити демо-дані\n";
     std::cout << "7. Зберегти дані\n";
     std::cout << "8. Завантажити дані\n";
@@ -32,6 +32,7 @@ void manageFilmsMenu(std::vector<Film>& films)
         std::cout << "2. Переглянути всі фільми\n";
         std::cout << "3. Редагувати фільм за ID\n";
         std::cout << "4. Видалити фільм за ID\n";
+        std::cout << "5. Пошук фільмів\n";
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
        
@@ -56,6 +57,9 @@ void manageFilmsMenu(std::vector<Film>& films)
         case 4: 
             removeFilmById(films);
             break;
+        case 5:
+            searchFilmsById(films);
+            break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
             break;
@@ -74,8 +78,9 @@ void manageHallMenu(std::vector<Hall>& halls)
         std::cout << BOLD << YELLOW << "\n== Керування залами ==\n" << RESET;
         std::cout << GREEN << "1. Додати зал\n";
         std::cout << "2. Переглянути всі зали\n";
-        std::cout << "3. Редагувати зали за ID\n";
+        std::cout << "3. Редагувати зал за ID\n";
         std::cout << "4. Видалити зал за ID\n";
+        std::cout << "5. Пошук залів\n";
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
         
@@ -100,6 +105,9 @@ void manageHallMenu(std::vector<Hall>& halls)
         case 4: 
             removeHallById(halls);
             break;
+        case 5:
+            searchHallsById(halls);
+            break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
             break;
@@ -116,10 +124,10 @@ void manageSessionMenu(std::vector<Session>& sessions)
     do 
     {
         std::cout << BOLD << YELLOW << "\n== Керування сеансами ==\n" << RESET;
-        std::cout << GREEN << "1. Додати сенс\n";
+        std::cout << GREEN << "1. Додати сеанс\n";
         std::cout << "2. Переглянути всі сеанси\n";
-        std::cout << "3. Редагувати сеанси за ID\n";
-        std::cout << "4. Видалити сеанси за ID\n";
+        std::cout << "3. Редагувати сеанс за ID\n";
+        std::cout << "4. Видалити сеанс за ID\n";
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
        
