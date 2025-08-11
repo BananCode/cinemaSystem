@@ -128,6 +128,7 @@ void manageSessionMenu(std::vector<Session>& sessions)
         std::cout << "2. Переглянути всі сеанси\n";
         std::cout << "3. Редагувати сеанс за ID\n";
         std::cout << "4. Видалити сеанс за ID\n";
+        std::cout << "5. Пошук сеансів\n";
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
        
@@ -152,6 +153,9 @@ void manageSessionMenu(std::vector<Session>& sessions)
         case 4: 
             removeSessionById(sessions);
             break;
+        case 5:
+            searchSessionsById(sessions);
+            break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
             break;
@@ -171,6 +175,7 @@ void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessi
         std::cout << "2. Переглянути всі квитки\n";
         std::cout << "3. Редагувати квиток за ID\n";
         std::cout << "4. Видалити квиток за ID\n";
+        std::cout << "5. Пошук квитків\n";
         std::cout << "0. Назад\n" << RESET;
         std::cout << YELLOW << "Ваш вибір: " << RESET;
         
@@ -194,6 +199,9 @@ void manageTicketsMenu(std::vector<Ticket>& tickets, std::vector<Session>& sessi
             break;
         case 4:
             removeTicketById(tickets);
+            break;
+        case 5:
+            searchTicketsById(tickets);
             break;
         case 0:
             std::cout << MAGENTA << "Повернення до головного меню...\n" << RESET;
