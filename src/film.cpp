@@ -94,7 +94,10 @@ void addFilm(std::vector<Film>& films)
 void showFilms(std::vector<Film>& films)
 {
     if (films.empty())
+    {
         std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         std::cout << BOLD << YELLOW << "\n=== Список фільмів ===\n" << RESET;
@@ -114,7 +117,10 @@ void editFilmById(std::vector<Film>& films)
     int genreChoice;
 
     if (films.empty())
+    {
         std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         showFilms(films);
@@ -182,7 +188,7 @@ void editFilmById(std::vector<Film>& films)
             }
         }
         if (!found)
-            std::cout << RED << "\nПомилка: фільм з таким ID не знайдено!\n" << RESET;
+            std::cout << RED << "Фільм з ID " << filmId << " не знайдено!\n" << RESET;
     }
 }
 
@@ -192,7 +198,10 @@ void removeFilmById(std::vector<Film>& films)
     bool found = false;
 
     if (films.empty())
+    {
         std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         showFilms(films);
@@ -222,7 +231,7 @@ void removeFilmById(std::vector<Film>& films)
                 break;
             }
         if (!found)
-            std::cout << RED << "\nПомилка: фільм з таким ID не знайдено!\n" << RESET;
+            std::cout << RED << "Фільм з ID " << filmId << " не знайдено!\n" << RESET;
     }
 }
 
