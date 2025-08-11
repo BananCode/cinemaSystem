@@ -11,11 +11,12 @@ struct Hall
 	int seatCount;			 // кількість місць
 };
 
-extern std::vector<Hall> halls;
+extern std::vector<Hall> halls; // Глобальний вектор залів
 
-void addHall(std::vector<Hall>& halls); 
-void showHall(std::vector<Hall>& halls);
-void editHallById(std::vector<Hall>& halls, int hallId);    
-void removeHallById(std::vector<Hall>& halls, int hallId);  
+void addHall(std::vector<Hall>& halls);                    // Додати новий зал
+void showHalls(std::vector<Hall>& halls);                  // Вивід всіх залів
+void editHallById(std::vector<Hall>& halls);               // Редагування залу за ID  
+void removeHallById(std::vector<Hall>& halls);             // Видалення залу за ID
+void searchHallsById(std::vector<Hall>& halls);			   // Пошук залів за ID
 
 #endif
