@@ -92,13 +92,13 @@ void addTicket(std::vector<Ticket>& tickets, std::vector<Session>& sessions)
 
     if (!selectedSession)
     {
-        std::cout << RED << "Сеанс не знайдено!" << RESET << std::endl;
+        std::cout << RED << "Сеанс не знайдено!\n" << RESET;
         return;
     }
 
     if (seatNum > selectedSession->hall->seatCount)
     {
-        std::cout << RED << "Помилка: місце перевищує кількість місць у залі!" << RESET << std::endl;
+        std::cout << RED << "Помилка: номер місця перевищує кількість місць у залі!\n" << RESET;
         return;
     }
 
@@ -111,13 +111,16 @@ void addTicket(std::vector<Ticket>& tickets, std::vector<Session>& sessions)
 
     Ticket newTicket{ ticketId, selectedSession, seatNum };
     tickets.push_back(newTicket);
-    std::cout << YELLOW << "Квиток успішно додано!\n" << RESET;
+    std::cout << GREEN << "Квиток успішно додано!\n" << RESET;
 }
 
 void showTicket(std::vector<Ticket>& tickets)
 {
     if (tickets.empty())
+    {
         std::cout << RED << "\nПомилка: квитків ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         std::cout << BOLD << YELLOW << "\n=== Список квитків ===\n" << RESET;
@@ -140,7 +143,7 @@ void editTicketById(std::vector<Ticket>& tickets)
     bool found = false;
     bool sessionFound = false;
 
-    if (tickets.size() == 0)
+    if (tickets.empty())
     {
         std::cout << RED << "\nПомилка: квитків ще немає!\n" << RESET;
         return;
@@ -170,7 +173,7 @@ void editTicketById(std::vector<Ticket>& tickets)
             return;
         }
 
-        if (sessions.size() == 0)
+        if (sessions.empty())
         {
             std::cout << RED << "\nПомилка: сеансів ще немає!\n" << RESET;
             return;
@@ -227,8 +230,11 @@ void removeTicketById(std::vector<Ticket>& tickets)
     int ticketId;
     bool found = false;
 
-    if (tickets.size() == 0)
+    if (tickets.empty())
+    {
         std::cout << RED << "\nПомилка: квитків ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         showTicket(tickets);
@@ -252,4 +258,52 @@ void removeTicketById(std::vector<Ticket>& tickets)
         if (!found)
             std::cout << RED << "\nПомилка: квиток з таким ID не знайдено!\n" << RESET;
     }
+}
+
+void searchTicketsById(std::vector<Ticket>& tickets)
+{
+    int ticketId;
+    bool found = false;
+
+    std::cout << BOLD << YELLOW << "\n=== Пошук квитків за ID ===\n" << RESET;
+    std::cout << CYAN << "Введіть ID квитка: " << RESET;
+
+    while (true)
+    {
+        std::cin >> ticketId;
+        if (std::cin.fail())
+        {
+            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        else if (ticketId <= 0)
+            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+        else
+            break;
+    }
+
+    if (tickets.empty())
+    {
+        std::cout << RED << "\nПомилка: квитків ще немає!\n" << RESET;
+        return;
+    }
+    
+    std::cout << BOLD << YELLOW << "\n=== Результати пошуку ===\n" << RESET;
+    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(15) << "Місце" << std::setw(30) << "Фільм" << std::setw(20) << "Зал" << RESET << "\n";
+    std::cout << std::string(65, '-') << "\n";
+
+    for (const auto ticket : tickets)
+        if (ticket.ticketId == ticketId) 
+        {
+            std::cout << MAGENTA << std::setw(10) << ticket.ticketId << RESET
+                << CYAN << std::setw(15) << ticket.seatNum << RESET
+                << YELLOW << std::setw(30) << ticket.session->movie->filmName << RESET
+                << BLUE << std::setw(20) << ticket.session->hall->hallName << RESET << "\n";
+            found = true;
+            break;
+        }
+
+    if (!found)
+        std::cout << RED << "Квиток з ID " << ticketId << " не знайдено!\n" << RESET;
 }
