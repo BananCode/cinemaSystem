@@ -43,7 +43,7 @@ void addSession(std::vector<Session>& sessions)
             for (int i = 0; i < sessions.size(); i++)
                 if (newSession.sessionId == sessions[i].sessionId)
                 {
-                    std::cout << RED << "Цей ID вже існує введіть айді ще раз: " << RESET;
+                    std::cout << RED << "Цей ID вже існує, введіть ID ще раз: " << RESET;
                     isUnique = false;
                     break;
                 }
@@ -196,7 +196,7 @@ void editSessionById(std::vector<Session>& sessions)
     
     if (!found)
     {
-        std::cout << RED << "\nПомилка: сеанс з таким ID не знайдено!\n" << RESET;
+        std::cout << RED << "Сеанс з ID " << sessionId << " не знайдено!\n" << RESET;
         return;
     }
 
@@ -227,7 +227,7 @@ void editSessionById(std::vector<Session>& sessions)
 
     if (!filmFound)
     {
-        std::cout << RED << "\nПомилка: фільм з таким ID не знайдено!\n" << RESET;
+        std::cout << RED << "Фільм з ID " << filmId << " не знайдено!\n" << RESET;
         return;
     }
 
@@ -257,7 +257,7 @@ void editSessionById(std::vector<Session>& sessions)
 
     if (!hallFound)
     {
-        std::cout << RED << "\nПомилка: зал з таким ID не знайдено!\n" << RESET;
+        std::cout << RED << "Зал з ID " << hallId << " не знайдено!\n" << RESET;
         return;
     }
 
@@ -284,7 +284,10 @@ void removeSessionById(std::vector<Session>& sessions)
     bool found = false;
 
     if (sessions.empty())
+    {
         std::cout << RED << "\nПомилка: сеансів ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         showSession(sessions);
@@ -314,6 +317,54 @@ void removeSessionById(std::vector<Session>& sessions)
                 break;
             }
         if (!found)
-            std::cout << RED << "\nПомилка: сеанс з таким ID не знайдено!\n" << RESET;
+            std::cout << RED << "Сеанс з ID " << sessionId << " не знайдено!\n" << RESET;
     }
+}
+
+void searchSessionsById(std::vector<Session>& sessions)
+{
+    int sessionId;
+    bool found = false;
+
+    std::cout << BOLD << YELLOW << "\n=== Пошук сеансів за ID ===\n" << RESET;
+    std::cout << CYAN << "Введіть ID сеансу: " << RESET;
+
+    while (true)
+    {
+        std::cin >> sessionId;
+        if (std::cin.fail())
+        {
+            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        else if (sessionId <= 0)
+            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+        else
+            break;
+    }
+
+    if (sessions.empty())
+    {
+        std::cout << RED << "\nПомилка: сеансів ще немає!\n" << RESET;
+        return;
+    }
+
+    std::cout << BOLD << YELLOW << "\n=== Результати пошуку ===\n" << RESET;
+    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(30) << "Фільм" << std::setw(15) << "Зал" << std::setw(20) << "Час" << RESET << "\n";
+    std::cout << std::string(75, '-') << "\n";
+
+    for (const auto session : sessions)
+        if (session.sessionId == sessionId)
+        {
+            std::cout << MAGENTA << std::setw(10) << session.sessionId << RESET
+                << CYAN << std::setw(30) << (session.movie ? session.movie->filmName : "Н/Д") << RESET
+                << YELLOW << std::setw(15) << (session.hall ? session.hall->hallName : "Н/Д") << RESET
+                << BLUE << std::setw(20) << session.sessionTime << RESET << "\n";
+            found = true;
+            break;
+        }
+
+    if (!found) 
+        std::cout << RED << "Сеанс з ID " << sessionId << " не знайдено!\n" << RESET;
 }
