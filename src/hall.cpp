@@ -75,7 +75,10 @@ void addHall(std::vector<Hall>& halls)
 void showHalls(std::vector<Hall>& halls)
 {
     if (halls.empty())
+    {
         std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         std::cout << BOLD << YELLOW << "\n=== Список залів ===\n" << RESET;
@@ -94,7 +97,10 @@ void editHallById(std::vector<Hall>& halls)
     bool found = false;
 
     if (halls.empty())
+    {
         std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         showHalls(halls);
@@ -164,11 +170,14 @@ void removeHallById(std::vector<Hall>& halls)
     bool found = false;
 
     if (halls.empty())
+    {
         std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        return;
+    }
     else
     {
         showHalls(halls);
-        std::cout << YELLOW << "\nВведіть ID залу який хочете видалити: " << RESET;
+        std::cout << YELLOW << "\nВведіть ID залу, який хочете видалити: " << RESET;
         while (true)
         {
             std::cin >> hallId;
@@ -195,4 +204,51 @@ void removeHallById(std::vector<Hall>& halls)
         if (!found)
             std::cout << RED << "\nПомилка: зал з таким ID не знайдено!\n" << RESET;
     }
+}
+
+void searchHallsById(std::vector<Hall>& halls)
+{
+    int hallId;
+    bool found = false;
+
+    std::cout << BOLD << YELLOW << "\n=== Пошук залів за ID ===\n" << RESET;
+    std::cout << CYAN << "Введіть ID залу: " << RESET;
+
+    while (true)
+    {
+        std::cin >> hallId;
+        if (std::cin.fail())
+        {
+            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        else if (hallId <= 0)
+            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+        else
+            break;
+    }
+
+    if (halls.empty())
+    {
+        std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        return;
+    }
+
+    std::cout << BOLD << YELLOW << "\n=== Результати пошуку ===\n" << RESET;
+    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(30) << "Назва" << std::setw(15) << "Жанр" << RESET << "\n";
+    std::cout << std::string(55, '-') << "\n";
+
+    for (const auto hall : halls)
+        if (hall.hallId == hallId)
+        {
+            std::cout << MAGENTA << std::setw(10) << hall.hallId << RESET
+                << CYAN << std::setw(20) << hall.hallName << RESET
+                << YELLOW << std::setw(15) << hall.seatCount << RESET << "\n";
+            found = true;
+            break;
+        }
+
+    if (!found) 
+        std::cout << RED << "Зал з ID " << hallId << " не знайдено!\n" << RESET;
 }
