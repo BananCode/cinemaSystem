@@ -9,13 +9,13 @@ void showAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
 {
     std::cout << BOLD << YELLOW;
     std::cout << std::left;
-    std::cout << std::setw(18) << "Фільм" << " | "
-        << std::setw(10) << "Зал" << " | "
-        << std::setw(24) << "Час сесії" << " | "
-        << std::setw(10) << "Місце" << "\n";
+    std::cout << std::setw(18) << "Film" << " | "
+        << std::setw(10) << "Hall" << " | "
+        << std::setw(24) << "Session Time" << " | "
+        << std::setw(10) << "Seat" << "\n";
     std::cout << RESET;
 
-    std::cout << std::string(60, '-') << "\n";
+    std::cout << std::string(70, '-') << "\n";
 
     for (const auto& t : tickets)
     {
@@ -25,11 +25,12 @@ void showAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
         Film* film = s->movie;
         Hall* hall = s->hall;
 
-        if (!film || !hall) continue;
+        if (!film || !hall)
+            continue;
 
         std::cout << std::setw(20) << film->filmName << " | "
             << CYAN << std::setw(10) << hall->hallName << RESET << " | "
-            << GREEN << std::setw(15) << s->sessionTime << RESET << " | "
+            << GREEN << std::setw(24) << s->sessionTime << RESET << " | "
             << CYAN << std::setw(10) << t.seatNum << RESET << "\n";
     }
 }
@@ -40,27 +41,27 @@ void saveAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
 
     if (!cinemaData)
     {
-        std::cout << RED << "Помилка: не вдалось відкрити файл\n" << RESET;
+        std::cout << RED << "Error: Failed to open file!\n" << RESET;
         return;
     }
 
-    cinemaData << "=== Фільми ===\n";
-    
-    for (const auto film : films)
-        cinemaData << film.filmId << ", " << film.filmName << ", " << film.genre << "\n";
+    cinemaData << "=== Films ===\n";
 
-    cinemaData << "\n=== Зали ===\n";
-    
+    for (const auto film : films)
+        cinemaData << film.filmId << ", " << film.filmName << ", " << genreNames[film.genre] << "\n";
+
+    cinemaData << "\n=== Halls ===\n";
+
     for (const auto hall : halls)
         cinemaData << hall.hallId << ", " << hall.hallName << ", " << hall.seatCount << "\n";
 
-    cinemaData << "\n=== Сеанси ===\n";
-    
+    cinemaData << "\n=== Sessions ===\n";
+
     for (const auto session : sessions)
         cinemaData << session.sessionId << ", " << session.movie->filmName << ", " << session.hall->hallName << ", " << session.sessionTime << "\n";
 
-    cinemaData << "\n=== Квитки ===\n";
-    
+    cinemaData << "\n=== Tickets ===\n";
+
     for (const auto ticket : tickets)
         cinemaData << ticket.ticketId << ", " << ticket.session->sessionId << ", " << ticket.seatNum << "\n";
 
@@ -73,9 +74,9 @@ void loadAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
     std::string currentSection;
 
     std::ifstream inputFile("cinema_data.txt");
-    if (!inputFile) 
+    if (!inputFile)
     {
-        std::cout << RED << "Не вдалося відкрити файл для читання!" << RESET << std::endl;
+        std::cout << RED << "Error: Failed to open file for reading!\n" << RESET;
         return;
     }
 
@@ -86,13 +87,13 @@ void loadAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
 
     while (std::getline(inputFile, line))
     {
-        if (line == "=== Фільми ===")
+        if (line == "=== Films ===")
             currentSection = "films";
-        else if (line == "=== Зали ===")
+        else if (line == "=== Halls ===")
             currentSection = "halls";
-        else if (line == "=== Сеанси ===")
+        else if (line == "=== Sessions ===")
             currentSection = "sessions";
-        else if (line == "=== Квитки ===")
+        else if (line == "=== Tickets ===")
             currentSection = "ticket";
         else if (!line.empty())
         {
@@ -100,29 +101,27 @@ void loadAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
             if (currentSection == "films")
             {
                 Film film;
-                std::string idStr;
-                std::string name;
+                std::string filmIdStr;
+                std::string filmName;
                 std::string genreStr;
 
-                std::getline(ss, idStr, ',');
-                std::getline(ss, name, ',');
+                std::getline(ss, filmIdStr, ',');
+                std::getline(ss, filmName, ',');
                 std::getline(ss, genreStr, ',');
 
-                film.filmId = std::stoi(idStr);
-                film.filmName = name;
-                
-                if (genreStr == "Action")
-                    film.genre = Genre::Action;
-                else if (genreStr == "Comedy")
+                film.filmId = std::stoi(filmIdStr);
+                film.filmName = filmName;
+
+                if (genreStr == "Comedy")
                     film.genre = Genre::Comedy;
+                else if (genreStr == "Action")
+                    film.genre = Genre::Action;
                 else if (genreStr == "Documentary")
                     film.genre = Genre::Documentary;
                 else if (genreStr == "Drama")
                     film.genre = Genre::Drama;
                 else if (genreStr == "Fantasy")
                     film.genre = Genre::Fantasy;
-                else if (genreStr == "GenreCount")
-                    film.genre = Genre::GenreCount;
                 else if (genreStr == "Horror")
                     film.genre = Genre::Horror;
                 else if (genreStr == "Thriller")
@@ -162,20 +161,22 @@ void loadAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
 
                 session.sessionId = std::stoi(sessionIdStr);
                 session.movie = nullptr;
-                for (auto& f : films) 
-                    if (f.filmName == filmName) 
+
+                for (auto& f : films)
+                    if (f.filmName == filmName)
                     {
                         session.movie = &f;
                         break;
                     }
-                
+
                 session.hall = nullptr;
-                for (auto& h : halls) 
+
+                for (auto& h : halls)
                     if (h.hallName == hallName) {
                         session.hall = &h;
                         break;
                     }
-                
+
                 session.sessionTime = sessionTime;
 
                 sessions.push_back(session);
@@ -196,8 +197,9 @@ void loadAllData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector
 
                 ticket.session = nullptr;
                 int sessionId = std::stoi(sessionIdStr);
-                for (auto& s : sessions) 
-                    if (s.sessionId == sessionId) 
+
+                for (auto& s : sessions)
+                    if (s.sessionId == sessionId)
                     {
                         ticket.session = &s;
                         break;
