@@ -5,12 +5,12 @@
 void loadDemoData(std::vector<Film>& films, std::vector<Hall>& halls, std::vector<Session>& sessions, std::vector<Ticket>& tickets)
 {
     // Додаємо фільми до вектора
-    films.push_back({ 1, "Матриця", Horror });
-    films.push_back({ 2, "Початок", Comedy });
+    films.push_back({ 1, "The Matrix", Horror });
+    films.push_back({ 2, "Inception", Comedy });
 
     //Додаємо зали до вектора
-    halls.push_back({ 1, "Зал-1", 50 });
-    halls.push_back({ 2, "Зал-2", 100 });
+    halls.push_back({ 1, "Hall-1", 50 });
+    halls.push_back({ 2, "Hall-2", 100 });
 
     //Вказівники на фільми та зали
     Film* movie1 = &films[0];
