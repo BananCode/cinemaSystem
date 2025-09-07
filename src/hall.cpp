@@ -11,55 +11,55 @@ void addHall(std::vector<Hall>& halls)
     bool isUnique = false;
 
     std::cin.ignore();
-    std::cout << BOLD << YELLOW << "\n=== Додавання нового залу ===\n" << RESET;
-    std::cout << CYAN << "Введіть назву залу: " << RESET;
+    std::cout << BOLD << YELLOW << "\n=== Add New Hall ===\n" << RESET;
+    std::cout << CYAN << "Enter hall name: " << RESET;
     while (true)
     {
         std::getline(std::cin, newHall.hallName);
         if (newHall.hallName.empty())
         {
-            std::cout << RED << "Помилка: назва залу не може бути порожньою!\n" << RESET;
-            std::cout << CYAN << "Введіть назву залу: " << RESET;
+            std::cout << RED << "Error: Hall name cannot be empty!\n" << RESET;
+            std::cout << CYAN << "Enter hall name: " << RESET;
         }
         else
             break;
     }
 
-    std::cout << CYAN << "Введіть кількість місць у залі: " << RESET;
+    std::cout << CYAN << "Enter number of seats: " << RESET;
     while (true)
     {
         std::cin >> newHall.seatCount;
         if (std::cin.fail())
         {
-            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cout << RED << "Error: Enter an integer!\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else if (newHall.seatCount <= 0)
-            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+            std::cout << RED << "Error: Enter a positive number!\n" << RESET;
         else
             break;
     }
 
-    std::cout << CYAN << "Введіть ID залу: " << RESET;
+    std::cout << CYAN << "Enter hall ID: " << RESET;
     while (true)
     {
         std::cin >> newHall.hallId;
         isUnique = true;
         if (std::cin.fail())
         {
-            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cout << RED << "Error: Enter an integer!\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else if (newHall.hallId <= 0)
-            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+            std::cout << RED << "Error: Enter a positive number!\n" << RESET;
         else
         {
             for (const auto& hall : halls)
                 if (newHall.hallId == hall.hallId)
                 {
-                    std::cout << RED << "Цей ID вже існує, введіть ID ще раз: " << RESET;
+                    std::cout << RED << "This ID already exists, enter ID again: " << RESET;
                     isUnique = false;
                     break;
                 }
@@ -69,25 +69,25 @@ void addHall(std::vector<Hall>& halls)
     }
 
     halls.push_back(newHall);
-    std::cout << GREEN << "Зал успішно додано!\n" << RESET;
+    std::cout << GREEN << "Hall added successfully!\n" << RESET;
 }
 
 void showHalls(std::vector<Hall>& halls)
 {
     if (halls.empty())
     {
-        std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No halls available!\n" << RESET;
         return;
     }
     else
     {
-        std::cout << BOLD << YELLOW << "\n=== Список залів ===\n" << RESET;
-        std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(20) << "Назва" << std::setw(15) << "Місць" << RESET << "\n";
-        std::cout << std::string(35, '-') << "\n";
+        std::cout << BOLD << YELLOW << "\n=== List of Halls ===\n" << RESET;
+        std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(20) << "Name" << std::setw(15) << "Seats" << RESET << "\n";
+        std::cout << std::string(45, '-') << "\n";
         for (const auto& hall : halls)
-            std::cout << MAGENTA << std::setw(10) << hall.hallId << RESET 
-                      << CYAN << std::setw(20) << hall.hallName << RESET 
-                      << YELLOW << std::setw(15) << hall.seatCount << RESET << "\n";
+            std::cout << MAGENTA << std::setw(10) << hall.hallId << RESET
+            << CYAN << std::setw(20) << hall.hallName << RESET
+            << YELLOW << std::setw(15) << hall.seatCount << RESET << "\n";
     }
 }
 
@@ -98,69 +98,66 @@ void editHallById(std::vector<Hall>& halls)
 
     if (halls.empty())
     {
-        std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No halls available!\n" << RESET;
         return;
     }
     else
     {
         showHalls(halls);
-        std::cout << CYAN << "\nВведіть ID залу для редагування: " << RESET;
+        std::cout << YELLOW << "\nEnter ID of hall to edit: " << RESET;
         while (true)
         {
             std::cin >> hallId;
             if (std::cin.fail())
             {
-                std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+                std::cout << RED << "Error: Enter an integer!\n" << RESET;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
             else if (hallId <= 0)
-                std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+                std::cout << RED << "Error: Enter a positive number!\n" << RESET;
             else
                 break;
         }
 
-        std::cin.ignore();
         for (auto& hall : halls)
-        {
             if (hallId == hall.hallId)
             {
-                found = true;
-                std::cout << GREEN << "\nЗал знайдено!\n" << RESET;
-                std::cout << CYAN << "Введіть нову назву залу: " << RESET;
+                std::cin.ignore();
+                std::cout << CYAN << "Enter new hall name: " << RESET;
                 while (true)
                 {
                     std::getline(std::cin, hall.hallName);
                     if (hall.hallName.empty())
                     {
-                        std::cout << RED << "Помилка: назва залу не може бути порожньою!\n" << RESET;
-                        std::cout << CYAN << "Введіть нову назву залу: " << RESET;
+                        std::cout << RED << "Error: Hall name cannot be empty!\n" << RESET;
+                        std::cout << CYAN << "Enter new hall name: " << RESET;
                     }
                     else
                         break;
                 }
 
-                std::cout << CYAN << "Введіть кількість місць у залі: " << RESET;
+                std::cout << CYAN << "Enter new number of seats: " << RESET;
                 while (true)
                 {
                     std::cin >> hall.seatCount;
                     if (std::cin.fail())
                     {
-                        std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+                        std::cout << RED << "Error: Enter an integer!\n" << RESET;
                         std::cin.clear();
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     }
                     else if (hall.seatCount <= 0)
-                        std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+                        std::cout << RED << "Error: Enter a positive number!\n" << RESET;
                     else
                         break;
                 }
-                std::cout << GREEN << "Зал успішно відредаговано!\n" << RESET;
+                std::cout << MAGENTA << "\nHall edited successfully!\n" << RESET;
+                found = true;
                 break;
             }
-        }
         if (!found)
-            std::cout << RED << "\nПомилка: зал з таким ID не знайдено!\n" << RESET;
+            std::cout << RED << "\nError: Hall with ID " << hallId << " not found!\n" << RESET;
     }
 }
 
@@ -171,24 +168,24 @@ void removeHallById(std::vector<Hall>& halls)
 
     if (halls.empty())
     {
-        std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No halls available!\n" << RESET;
         return;
     }
     else
     {
         showHalls(halls);
-        std::cout << YELLOW << "\nВведіть ID залу, який хочете видалити: " << RESET;
+        std::cout << YELLOW << "\nEnter ID of hall to delete: " << RESET;
         while (true)
         {
             std::cin >> hallId;
             if (std::cin.fail())
             {
-                std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+                std::cout << RED << "Error: Enter an integer!\n" << RESET;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
             else if (hallId <= 0)
-                std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+                std::cout << RED << "Error: Enter a positive number!\n" << RESET;
             else
                 break;
         }
@@ -197,12 +194,12 @@ void removeHallById(std::vector<Hall>& halls)
             if (it->hallId == hallId)
             {
                 halls.erase(it);
-                std::cout << MAGENTA << "\nЗал успішно видалено!\n" << RESET;
+                std::cout << MAGENTA << "\nHall deleted successfully!\n" << RESET;
                 found = true;
                 break;
             }
         if (!found)
-            std::cout << RED << "\nПомилка: зал з таким ID не знайдено!\n" << RESET;
+            std::cout << RED << "\nError: Hall with ID " << hallId << " not found!\n" << RESET;
     }
 }
 
@@ -211,33 +208,33 @@ void searchHallsById(std::vector<Hall>& halls)
     int hallId;
     bool found = false;
 
-    std::cout << BOLD << YELLOW << "\n=== Пошук залів за ID ===\n" << RESET;
-    std::cout << CYAN << "Введіть ID залу: " << RESET;
+    std::cout << BOLD << YELLOW << "\n=== Search Halls by ID ===\n" << RESET;
+    std::cout << CYAN << "Enter hall ID: " << RESET;
 
     while (true)
     {
         std::cin >> hallId;
         if (std::cin.fail())
         {
-            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cout << RED << "Error: Enter an integer!\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else if (hallId <= 0)
-            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+            std::cout << RED << "Error: Enter a positive number!\n" << RESET;
         else
             break;
     }
 
     if (halls.empty())
     {
-        std::cout << RED << "\nПомилка: залів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No halls available!\n" << RESET;
         return;
     }
 
-    std::cout << BOLD << YELLOW << "\n=== Результати пошуку ===\n" << RESET;
-    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(30) << "Назва" << std::setw(15) << "Жанр" << RESET << "\n";
-    std::cout << std::string(55, '-') << "\n";
+    std::cout << BOLD << YELLOW << "\n=== Search Results ===\n" << RESET;
+    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(20) << "Name" << std::setw(15) << "Seats" << RESET << "\n";
+    std::cout << std::string(45, '-') << "\n";
 
     for (const auto hall : halls)
         if (hall.hallId == hallId)
@@ -249,6 +246,6 @@ void searchHallsById(std::vector<Hall>& halls)
             break;
         }
 
-    if (!found) 
-        std::cout << RED << "Зал з ID " << hallId << " не знайдено!\n" << RESET;
+    if (!found)
+        std::cout << RED << "Hall with ID " << hallId << " not found!\n" << RESET;
 }
