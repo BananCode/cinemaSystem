@@ -5,7 +5,7 @@
 
 std::vector<Film> films;
 
-const std::string genreNames[GenreCount] // Масив жанрів
+const std::string genreNames[GenreCount]
 {
     "Comedy",
     "Drama",
@@ -23,32 +23,31 @@ void addFilm(std::vector<Film>& films)
     int genreChoice;
 
     std::cin.ignore();
-    std::cout << BOLD << YELLOW << "\n=== Додавання нового фільму ===\n" << RESET;
-    std::cout << CYAN << "Введіть назву фільму: " << RESET;
+    std::cout << BOLD << YELLOW << "\n=== Add New Film ===\n" << RESET;
+    std::cout << CYAN << "Enter film name: " << RESET;
     while (true)
     {
         std::getline(std::cin, newFilm.filmName);
-
         if (newFilm.filmName.empty())
         {
-            std::cout << RED << "Помилка: назва фільму не може бути порожньою!\n" << RESET;
-            std::cout << CYAN << "Введіть назву фільму: " << RESET;
+            std::cout << RED << "Error: Film name cannot be empty!\n" << RESET;
+            std::cout << CYAN << "Enter film name: " << RESET;
         }
         else
             break;
     }
 
-    std::cout << CYAN << "Виберіть жанр фільму: \n" << RESET;
+    std::cout << CYAN << "Select film genre: \n" << RESET;
     for (int i = 0; i < GenreCount; i++)
         std::cout << YELLOW << i + 1 << " - " << genreNames[i] << RESET << "\n";
 
     while (true)
     {
-        std::cout << CYAN << "Введіть номер жанру (1-" << GenreCount << "): " << RESET;
+        std::cout << CYAN << "Enter genre number (1-" << GenreCount << "): " << RESET;
         std::cin >> genreChoice;
         if (std::cin.fail() || genreChoice < 1 || genreChoice > GenreCount)
         {
-            std::cout << RED << "Помилка! Введіть число від 1 до " << GenreCount << "\n" << RESET;
+            std::cout << RED << "Error: Enter a number from 1 to " << GenreCount << "\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -59,7 +58,7 @@ void addFilm(std::vector<Film>& films)
         }
     }
 
-    std::cout << CYAN << "Введіть ID фільму: " << RESET;
+    std::cout << CYAN << "Enter film ID: " << RESET;
     while (true)
     {
         std::cin >> newFilm.filmId;
@@ -67,18 +66,18 @@ void addFilm(std::vector<Film>& films)
 
         if (std::cin.fail())
         {
-            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cout << RED << "Error: Enter an integer!\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else if (newFilm.filmId <= 0)
-            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+            std::cout << RED << "Error: Enter a positive number!\n" << RESET;
         else
         {
             for (int i = 0; i < films.size(); i++)
                 if (newFilm.filmId == films[i].filmId)
                 {
-                    std::cout << RED << "Цей ID вже існує, введіть ID ще раз: " << RESET;
+                    std::cout << RED << "This ID already exists, enter ID again: " << RESET;
                     isUnique = false;
                     break;
                 }
@@ -88,25 +87,25 @@ void addFilm(std::vector<Film>& films)
     }
 
     films.push_back(newFilm);
-    std::cout << GREEN << "Фільм успішно додано!\n" << RESET;
+    std::cout << GREEN << "Film added successfully!\n" << RESET;
 }
 
 void showFilms(std::vector<Film>& films)
 {
     if (films.empty())
     {
-        std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No films available!\n" << RESET;
         return;
     }
     else
     {
-        std::cout << BOLD << YELLOW << "\n=== Список фільмів ===\n" << RESET;
-        std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(20) << "Назва" << std::setw(15) << "Жанр" << RESET << "\n";
-        std::cout << std::string(35, '-') << "\n";
-        for (const auto film : films)
-            std::cout << MAGENTA << std::setw(10) << film.filmId << RESET 
-                      << CYAN << std::setw(20) << film.filmName << RESET
-                      << YELLOW << std::setw(15) << genreNames[film.genre] << RESET << "\n";
+        std::cout << BOLD << YELLOW << "\n=== List of Films ===\n" << RESET;
+        std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(30) << "Name" << std::setw(15) << "Genre" << RESET << "\n";
+        std::cout << std::string(55, '-') << "\n";
+        for (const auto& film : films)
+            std::cout << MAGENTA << std::setw(10) << film.filmId << RESET
+            << CYAN << std::setw(30) << film.filmName << RESET
+            << YELLOW << std::setw(15) << genreNames[film.genre] << RESET << "\n";
     }
 }
 
@@ -114,81 +113,75 @@ void editFilmById(std::vector<Film>& films)
 {
     int filmId;
     bool found = false;
-    int genreChoice;
 
     if (films.empty())
     {
-        std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No films available!\n" << RESET;
         return;
     }
     else
     {
         showFilms(films);
-
-        std::cout << CYAN << "\nВведіть ID фільму для редагування: " << RESET;
+        std::cout << YELLOW << "\nEnter ID of film to edit: " << RESET;
         while (true)
         {
             std::cin >> filmId;
             if (std::cin.fail())
             {
-                std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+                std::cout << RED << "Error: Enter an integer!\n" << RESET;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
             else if (filmId <= 0)
-                std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+                std::cout << RED << "Error: Enter a positive number!\n" << RESET;
             else
                 break;
         }
 
-        std::cin.ignore();
-
-        for (int i = 0; i < films.size(); i++)
-        {
-            if (filmId == films[i].filmId)
+        for (auto& film : films)
+            if (filmId == film.filmId)
             {
-                found = true;
-                std::cout << GREEN << "\nФільм знайдено!\n" << RESET;
-                std::cout << CYAN << "Введіть нову назву фільму: " << RESET;
+                std::cin.ignore();
+                std::cout << CYAN << "Enter new film name: " << RESET;
                 while (true)
                 {
-                    std::getline(std::cin, films[i].filmName);
-
-                    if (films[i].filmName.empty())
+                    std::getline(std::cin, film.filmName);
+                    if (film.filmName.empty())
                     {
-                        std::cout << RED << "Помилка: назва фільму не може бути порожньою!\n" << RESET;
-                        std::cout << CYAN << "Введіть нову назву фільму: " << RESET;
+                        std::cout << RED << "Error: Film name cannot be empty!\n" << RESET;
+                        std::cout << CYAN << "Enter new film name: " << RESET;
                     }
                     else
                         break;
                 }
 
-                std::cout << CYAN << "Виберіть новий жанр фільму: \n" << RESET;
+                int genreChoice;
+                std::cout << CYAN << "Select new film genre: \n" << RESET;
                 for (int i = 0; i < GenreCount; i++)
                     std::cout << YELLOW << i + 1 << " - " << genreNames[i] << RESET << "\n";
 
                 while (true)
                 {
-                    std::cout << CYAN << "Введіть номер жанру (1-" << GenreCount << "): " << RESET;
+                    std::cout << CYAN << "Enter genre number (1-" << GenreCount << "): " << RESET;
                     std::cin >> genreChoice;
                     if (std::cin.fail() || genreChoice < 1 || genreChoice > GenreCount)
                     {
-                        std::cout << RED << "Помилка! Введіть число від 1 до " << GenreCount << "\n" << RESET;
+                        std::cout << RED << "Error: Enter a number from 1 to " << GenreCount << "\n" << RESET;
                         std::cin.clear();
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     }
                     else
                     {
-                        films[i].genre = static_cast<Genre>(genreChoice - 1);
+                        film.genre = static_cast<Genre>(genreChoice - 1);
                         break;
                     }
                 }
-                std::cout << MAGENTA << "\nФільм успішно відредаговано!\n" << RESET;
+                std::cout << MAGENTA << "\nFilm edited successfully!\n" << RESET;
+                found = true;
                 break;
             }
-        }
         if (!found)
-            std::cout << RED << "Фільм з ID " << filmId << " не знайдено!\n" << RESET;
+            std::cout << RED << "Film with ID " << filmId << " not found!\n" << RESET;
     }
 }
 
@@ -199,25 +192,24 @@ void removeFilmById(std::vector<Film>& films)
 
     if (films.empty())
     {
-        std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No films available!\n" << RESET;
         return;
     }
     else
     {
         showFilms(films);
-
-        std::cout << CYAN << "\nВведіть ID фільму для видалення: " << RESET;
+        std::cout << YELLOW << "\nEnter ID of film to delete: " << RESET;
         while (true)
         {
             std::cin >> filmId;
             if (std::cin.fail())
             {
-                std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+                std::cout << RED << "Error: Enter an integer!\n" << RESET;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
             else if (filmId <= 0)
-                std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+                std::cout << RED << "Error: Enter a positive number!\n" << RESET;
             else
                 break;
         }
@@ -226,12 +218,12 @@ void removeFilmById(std::vector<Film>& films)
             if (filmId == films[i].filmId)
             {
                 films.erase(films.begin() + i);
-                std::cout << MAGENTA << "\nФільм успішно видалено!\n" << RESET;
+                std::cout << MAGENTA << "\nFilm deleted successfully!\n" << RESET;
                 found = true;
                 break;
             }
         if (!found)
-            std::cout << RED << "Фільм з ID " << filmId << " не знайдено!\n" << RESET;
+            std::cout << RED << "Film with ID " << filmId << " not found!\n" << RESET;
     }
 }
 
@@ -240,32 +232,32 @@ void searchFilmsById(std::vector<Film>& films)
     int filmId;
     bool found = false;
 
-    std::cout << BOLD << YELLOW << "\n=== Пошук фільмів за ID ===\n" << RESET;
-    std::cout << CYAN << "Введіть ID фільму: " << RESET;
+    std::cout << BOLD << YELLOW << "\n=== Search Films by ID ===\n" << RESET;
+    std::cout << CYAN << "Enter film ID: " << RESET;
 
     while (true)
     {
         std::cin >> filmId;
         if (std::cin.fail())
         {
-            std::cout << RED << "Помилка! Введіть ціле число: " << RESET;
+            std::cout << RED << "Error: Enter an integer!\n" << RESET;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else if (filmId <= 0)
-            std::cout << RED << "Помилка! Введіть додатнє число: " << RESET;
+            std::cout << RED << "Error: Enter a positive number!\n" << RESET;
         else
             break;
     }
 
-    if (films.empty()) 
+    if (films.empty())
     {
-        std::cout << RED << "\nПомилка: фільмів ще немає!\n" << RESET;
+        std::cout << RED << "\nError: No films available!\n" << RESET;
         return;
     }
 
-    std::cout << BOLD << YELLOW << "\n=== Результати пошуку ===\n" << RESET;
-    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(30) << "Назва" << std::setw(15) << "Жанр" << RESET << "\n";
+    std::cout << BOLD << YELLOW << "\n=== Search Results ===\n" << RESET;
+    std::cout << BOLD << GREEN << std::left << std::setw(10) << "ID" << std::setw(30) << "Name" << std::setw(15) << "Genre" << RESET << "\n";
     std::cout << std::string(55, '-') << "\n";
 
     for (const auto film : films)
@@ -277,7 +269,7 @@ void searchFilmsById(std::vector<Film>& films)
             found = true;
             break;
         }
-    
-    if (!found) 
-        std::cout << RED << "Фільм з ID " << filmId << " не знайдено!\n" << RESET;
+
+    if (!found)
+        std::cout << RED << "Film with ID " << filmId << " not found!\n" << RESET;
 }
